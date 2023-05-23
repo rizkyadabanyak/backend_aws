@@ -1,3 +1,3 @@
 const product = [];
 
-module.exports = { mental: product };
+module.exports = { product: product };

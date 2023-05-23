@@ -1,7 +1,7 @@
 const { nanoid } = require("nanoid");
 const product = require("./product");
 
-const addMentalHandler = (request, h) => {
+const addProductlHandler = (request, h) => {
   console.log(`add`);
   const { name_product, price_product, stock_product } = request.payload;
   const id = nanoid(16);
@@ -17,6 +17,7 @@ const addMentalHandler = (request, h) => {
     udpatedAt,
   };
 
+  // return 'sss';
   product.product.push(newProduct);
   const isSuccess = product.product.filter((product) => product.id === id).length > 0;
   if (isSuccess) {
@@ -42,7 +43,7 @@ const addMentalHandler = (request, h) => {
   return response;
 };
 
-const getAllMentalHandler = (request, h) => ({
+const getAllProductHandler = (request, h) => ({
   status: "success get all Data",
   data: {
     product,
@@ -127,8 +128,8 @@ const deleteMentalByIdHandler = (request, h) => {
 };
 
 module.exports = {
-  addMentalHandler,
-  getAllMentalHandler,
+  addProductlHandler,
+  getAllProductHandler,
   getMentalByIdHandler,
   editMentalByIdHandler,
   deleteMentalByIdHandler,

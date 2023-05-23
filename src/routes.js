@@ -1,6 +1,6 @@
 const {
-  addMentalHandler,
-  getAllMentalHandler,
+  addProductlHandler,
+  getAllProductHandler,
   getMentalByIdHandler,
   editMentalByIdHandler,
   deleteMentalByIdHandler,
@@ -18,14 +18,14 @@ const routes = [
   // create date (POST)
   {
     method: "POST",
-    path: "/mental",
-    handler: addMentalHandler,
+    path: "/product/add",
+    handler: addProductlHandler,
   },
   //get all
   {
     method: "GET",
-    path: "/mental",
-    handler: getAllMentalHandler,
+    path: "/product/all",
+    handler: getAllProductHandler,
   },
   //detail data
   {
