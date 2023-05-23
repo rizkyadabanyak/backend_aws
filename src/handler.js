@@ -1,29 +1,32 @@
 const { nanoid } = require("nanoid");
-const mental = require("./mental");
+const product = require("./product");
 
 const addMentalHandler = (request, h) => {
   console.log(`add`);
-  const { mbti, mentalhealth } = request.payload;
+  const { name_product, price_product, stock_product } = request.payload;
   const id = nanoid(16);
   const createdAt = new Date().toISOString();
   const udpatedAt = createdAt;
 
-  const newMental = {
-    mbti,
-    mentalhealth,
+  const newProduct = {
+    name_product,
+    price_product,
+    stock_product,
     id,
     createdAt,
     udpatedAt,
   };
-  mental.mental.push(newMental);
-  const isSuccess = mental.mental.filter((mental) => mental.id === id).length > 0;
+
+  product.product.push(newProduct);
+  const isSuccess = product.product.filter((product) => product.id === id).length > 0;
   if (isSuccess) {
     const response = h.response({
       status: "success",
       message: "Data berhasil ditambah",
       data: {
-        mbti: mbti,
-        mentalhealth: mentalhealth,
+        name_product: name_product,
+        price_product: price_product,
+        stock_product: stock_product,
         nodeId: id,
       },
     });
@@ -42,7 +45,7 @@ const addMentalHandler = (request, h) => {
 const getAllMentalHandler = (request, h) => ({
   status: "success get all Data",
   data: {
-    mental,
+    product,
   },
 });
 
@@ -50,12 +53,12 @@ const getAllMentalHandler = (request, h) => ({
 const getMentalByIdHandler = (request, h) => {
   console.log(`get id`);
   const { id } = request.params;
-  const mentals = mental.mental.filter((n) => n.id === id)[0];
+  const mentals = product.product.filter((n) => n.id === id)[0];
   if (mentals !== undefined) {
     return {
       status: "success",
       data: {
-        mental,
+        product,
       },
     };
   }
@@ -73,10 +76,10 @@ const editMentalByIdHandler = (request, h) => {
   const { id, createAt } = request.params;
   const { mbti, mentalhealth } = request.payload;
   const updatedAt = new Date().toISOString();
-  const index = mental.mental.findIndex((mental) => mental.id === id);
+  const index = product.product.findIndex((product) => product.id === id);
   if (index !== -1) {
-    mental.mental[index] = {
-      ...mental[index],
+    product.product[index] = {
+      ...product[index],
       mbti,
       mentalhealth,
       id,
@@ -103,10 +106,10 @@ const editMentalByIdHandler = (request, h) => {
 const deleteMentalByIdHandler = (request, h) => {
   console.log(`hapus`);
   const { id } = request.params;
-  const index = mental.mental.findIndex((mental) => mental.id === id);
-  console.log(mental.mental.findIndex((mental) => mental.id === id));
+  const index = product.product.findIndex((product) => product.id === id);
+  console.log(product.product.findIndex((product) => product.id === id));
   if (index) {
-    mental.mental.splice(index, 1);
+    product.product.splice(index, 1);
     const response = h.response({
       status: "success",
       message: "Data berhasil dihapus",
