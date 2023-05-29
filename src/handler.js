@@ -1,39 +1,39 @@
 const { nanoid } = require("nanoid");
-const product = require("./product");
+// const product = require("./product");
+const { Product } = require("../models/product");
 
-const addProductlHandler = (request, h) => {
-  console.log(`add`);
+const addProductlHandler = async (request, h) => {
+
+  // request.header("Access-Control-Allow-Origin", "*");
+  // console.log(`add`);
   const { name_product, price_product, stock_product } = request.payload;
-  const id = nanoid(16);
-  const createdAt = new Date().toISOString();
-  const udpatedAt = createdAt;
 
-  const newProduct = {
-    name_product,
-    price_product,
-    stock_product,
-    id,
-    createdAt,
-    udpatedAt,
-  };
+  try {
 
-  // return 'sss';
-  product.product.push(newProduct);
-  const isSuccess = product.product.filter((product) => product.id === id).length > 0;
-  if (isSuccess) {
-    const response = h.response({
-      status: "success",
-      message: "Data berhasil ditambah",
-      data: {
-        name_product: name_product,
-        price_product: price_product,
-        stock_product: stock_product,
-        nodeId: id,
-      },
+    const product = await Product.create({
+      product_name: name_product,
+      product_price: price_product,
+      product_stock: stock_product,
+
     });
-    response.code(201);
-    return response;
+
+
+    return h.response({
+      data : product
+    });
+
+  } catch (error) {
+
+    return h.response({
+      message : error,
+      data : null,
+      status : "danger",
+      statusCode : 400
+
+    });
+
   }
+
 
   const response = h.reponse({
     status: "fail",
@@ -43,12 +43,17 @@ const addProductlHandler = (request, h) => {
   return response;
 };
 
-const getAllProductHandler = (request, h) => ({
-  status: "success get all Data",
-  data: {
-    product,
-  },
-});
+const getAllProductHandler = async (request, h) => {
+  try {
+    const products = await Product.findAll();
+    return h.response({
+      data : products
+    });
+  } catch (error) {
+    console.log(error);
+  };
+
+}
 
 // show detail
 const getMentalByIdHandler = (request, h) => {

@@ -1,5 +1,7 @@
 const Hapi = require("@hapi/hapi");
 const routes = require("./routes");
+const config = require('../database/config');
+// const config = require('../database/config');
 
 const init = async () => {
   const server = Hapi.server({
@@ -10,13 +12,27 @@ const init = async () => {
   }
   });
 
-  // server.route({
-  //   method: "GET",
-  //   path: "/",
-  //   handler: (request, h) => {
-  //     return "Hello World!, oh yeaahhh woho... berhasil. lelah ya... mangat...";
-  //   },
-  // });
+
+  await server.register([
+    {
+      plugin: require('hapi-sequelizejs'),
+      options: [
+        {
+          name: 'aws', // identifier
+          models: ['/models/**/*.js'], // paths/globs to model files
+          // ignoredModels: [__dirname + '/server/models/**/*.js'], // OPTIONAL: paths/globs to ignore files
+          sequelize: config.db, // sequelize instance
+          sync: false, // sync models - default false
+          forceSync: false, // force sync (drops tables) - default false
+        },
+      ],
+    }
+  ]);
+
+  (async () => {
+    await config.db.sync();
+  })();
+
 
   server.route(routes.routes);
 

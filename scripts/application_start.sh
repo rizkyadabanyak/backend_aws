@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR="$HOME/backend"
+DIR="$HOME/express-app"
 cd $DIR
 
 export NVM_DIR="$HOME/.nvm"

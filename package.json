@@ -10,7 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/hapi": "^21.3.0",
+    "dotenv": "^16.0.3",
+    "hapi-sequelizejs": "^4.6.1",
     "happi": "^0.9.1",
+    "mysql2": "^3.3.3",
     "nanoid": "^3.3.6",
     "nodemon": "^2.0.21"
   },
