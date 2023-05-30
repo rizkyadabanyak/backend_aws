@@ -12,7 +12,7 @@ const routes = [
     method: "GET",
     path: "/",
     handler: (request, h) => {
-      return "tolong bisa xxx";
+      return "wasap men";
     },
   },
   // create date (POST)
